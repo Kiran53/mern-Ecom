@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans');
+:root {
+--theme-bg-color: #3761af;
+--theme-color: white;
+
+
+}
+* { 
+  margin: 0;
+  padding: 0;
+  font-family: 'Open Sans', sans-serif;
+  box-sizing: border-box;
+}
+.navbar {
+  display: flex;
+  box-shadow: 0 0 2px 0 grey;
+  align-items: center;
+  font-size: 1em;
+  
+  background-color:#3761af;
+  background-color: var(--theme-bg-color);
+  
+  color: white;
+  color: var(--theme-color);
+  
+
+}
+
+.item{
+  padding: 10px;
+  text-decoration: none;
+  color: white;
+  color: var(--theme-color);
+
+}
+
+.item.right {
+  margin: 0 0 0 auto;
+}
+
+.navbar .logo {
+  font-size: 1.2em;
+  align-items: center;
+  display: flex;
+}
+
+.logo img {
+  max-width: 40px;
+}
+.item.search {
+  transition: 0.2s linear;
+  display:flex;
+  justify-content: center;
+  flex-grow:1;
+  
+}
+.item.search .search-icon {
+  border-left: 1px solid grey;
+  margin: 2px;
+  padding-left: 10px;
+  cursor:pointer;
+  color: grey;
+}
+.item.search .search-icon:hover {
+  
+  color: black;
+}
+
+.item.search input {
+  width: 100%;
+  padding: 6px ;
+  outline: none;
+  border: 2px solid grey; 
+  max-width: 100%;
+  border: 0;
+}
+
+.item .search-group {
+  display:flex;
+  width: 100%;
+  max-width: 700px;
+  border-radius: 20px;
+  border: 2px solid grey;
+  overflow: hidden;
+  background: white;
+  
+  border-color: white;
+  color: var(--theme-color);
+
+}
+.item .search-group select{
+
+  border: 0;
+  margin: 2px;
+  border-right: 1px solid grey;
+  max-width: 5em;
+  outline: none;
+  color: grey;
+  
+}
+
+.item .group {
+  display:flex;
+  align-items: center;
+  font-size: 0.9em;
+}
+
+
+.item .group .sub{
+  font-size: 0.8em;
+
+
+}
+
+.material-icons {
+  font-size:1.8rem;
+}
+
+
+.menu-icon{
+  display:none;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media (max-width: 700px) {
+  .item.search input {
+    display: none;
+  }
+  .menu-icon {
+    display:block;
+  }
+  .detail,.logo .text {
+    display:none;
+
+  }
+
+
+}
+p.p1 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 22.5px; font: 15.0px 'Helvetica Neue'; color: #000000; color: rgba(0, 0, 0, 0.9); -webkit-text-stroke: rgba(0, 0, 0, 0.9)}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; line-height: 15.0px; font: 15.0px 'Helvetica Neue'; color: #000000; color: rgba(0, 0, 0, 0.55); -webkit-text-stroke: rgba(0, 0, 0, 0.55); min-height: 18.0px}
+    p.p3 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 18.0px; font: 12.0px 'Helvetica Neue'; color: #191c1f; -webkit-text-stroke: #191c1f; min-height: 15.0px}
+    p.p4 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 15.8px; font: 10.5px 'Helvetica Neue'; color: #191c1f; -webkit-text-stroke: #191c1f}
+    p.p6 {margin: 0.0px 0.0px 0.0px 0.0px; line-height: 22.5px; font: 15.0px 'Helvetica Neue'; color: #191c1f; -webkit-text-stroke: #191c1f}
+    p.p7 {margin: 0.0px 0.0px 12.0px 0.0px; line-height: 22.5px; font: 15.0px 'Helvetica Neue Light'; color: #191c1f; -webkit-text-stroke: #191c1f}
+    p.p8 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; line-height: 18.0px; font: 12.0px 'Helvetica Neue'; color: #191c1f; -webkit-text-stroke: #191c1f; background-color: #ffffff}
+    p.p9 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; line-height: 18.0px; font: 12.0px 'Helvetica Neue'; color: #191c1f; -webkit-text-stroke: #191c1f}
+    p.p12 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; line-height: 9.0px; font: 9.0px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff; background-color: #191c1f}
+    p.p13 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; line-height: 15.8px; font: 10.5px 'Helvetica Neue'; color: #fdb50d; -webkit-text-stroke: #fdb50d; min-height: 12.0px}
+    p.p14 {margin: 0.0px 0.0px 0.0px 0.0px; text-align: center; line-height: 18.0px; font: 12.0px 'Helvetica Neue'; color: #ffffff; -webkit-text-stroke: #ffffff}
+    span.s1 {font-kerning: none; background-color: #f6f7f9}
+    span.s2 {font-kerning: none}
+    span.s3 {text-decoration: line-through ; font-kerning: none}
+    span.s4 {font-kerning: none; background-color: #ffffff}
+    span.s5 {text-decoration: line-through ; font-kerning: none; color: #59626a; background-color: #ffffff; -webkit-text-stroke: 0px #59626a}
+    span.s6 {font-kerning: none; background-color: #191c1f}
