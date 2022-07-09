@@ -6,18 +6,21 @@ export const user = createAsyncThunk(
     "auth/user",
     async (_,thunkAPI) => {
         try {
-            console.log("made req")
+            // console.log("made req")
             const response = await axios.get('/api/user')
-            console.log("auth/user/dispatch"+response.data)
-            return response.data
-        } catch (error) {
+            // console.log(response.data)
+            
+            return response.data 
+        } 
+        catch (error) {
+            // console.log("aut/user: error")
             const message =
                 (error.response &&
                     error.response.data &&
                     error.response.data.message) ||
                 error.message ||
                 error.toString();
-            thunkAPI.rejectWithValue(message);
+            return thunkAPI.rejectWithValue(message);
         }
     }
 )
@@ -55,17 +58,14 @@ export const login = createAsyncThunk(
     async ({ email, password }, thunkAPI) => {
         try {
             const data = await axios.post('/api/login', { email, password }, { withCredentials: true });
+            // console.log(data)
             return { user: data };
         } catch (error) {
-            const message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
+            
+            
             // return message
             // thunkAPI.dispatch(setMessage(message));
-            return thunkAPI.rejectWithValue(message);
+            return thunkAPI.rejectWithValue(error.response.data);
         }
     }
 )
@@ -89,22 +89,28 @@ const authSlice = createSlice({
             state.user=null
         },
         [login.fulfilled]: (state, action) => {
+
             state.isLoggedIn = true;
-            state.user = action.payload.user.data.name;
+            state.user = action.payload.data;
         },
         [login.rejected]: (state, action) => {
+            // console.log(action.payload)
+            state.autherr= action.payload
             state.isLoggedIn = false;
             state.user = null;
         },
         [logout.fulfilled]: (state, action) => {
             state.isLoggedIn = false;
             state.user = null;
+            window.alert("Logged Out!")
         },
         [user.fulfilled]: (state, action) => {
             state.isLoggedIn = true
-            state.user = action.payload.user.data
+            state.user = action.payload
+            // console.log("user fulfilled: "+state.user)
         },
         [user.rejected]: (state, action) => {
+            // console.log("rejected")
             state.isLoggedIn = false
             state.user = null
         },

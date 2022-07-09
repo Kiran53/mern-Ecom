@@ -145,6 +145,11 @@ module.exports.login = async (req, res) => {
 }
 
 module.exports.get_user = (req, res) => {
+    if(req.user==="400"){
+        console.log("here")
+        
+        return res.status(400).json({ msg: 'error error error'})
+    } 
     User.findById(req.user.id)
         .select('-password')
         .then(user => res.json(user.name));

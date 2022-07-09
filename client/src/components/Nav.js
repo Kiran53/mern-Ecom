@@ -1,10 +1,19 @@
 import React from 'react'
-import{Link} from 'react-router-dom'
+import{Link, useNavigate} from 'react-router-dom'
 import "../static/style.css"
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { logout } from '../slices/auth'
 export default function Nav() {
-    const user=useSelector(state=>state.user)
-    console.log(user)
+    const user=useSelector(state=>state.auth.user)
+    // console.log("user="+user)
+    const nav=useNavigate()
+    const dispatch=useDispatch();
+
+    let Handlelogout=async (e)=>{
+        e.preventDefault();
+        dispatch(logout())
+        .then(()=>nav('/'))
+    }
     return (
         <div>
             
@@ -37,7 +46,7 @@ export default function Nav() {
                 </div>
 
                 {user===null? 
-                <Link to="/login" className="item">
+                <Link to='/login' className="item">
 
                     <div className="group">
                         <i className="material-icons" >
@@ -50,7 +59,7 @@ export default function Nav() {
                     </div>
                 </Link>
                 :
-                <Link to="/logout" className="item">
+                <button onClick={Handlelogout} className="btn btn-link text-white">
 
                     <div className="group">
                         <i className="material-icons" >
@@ -60,7 +69,7 @@ export default function Nav() {
                             Logout
                         </div>
                     </div>
-                </Link>
+                </button>
                 }
                 <Link to="/login" className="item">
                     <div className="group">

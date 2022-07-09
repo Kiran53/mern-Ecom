@@ -1,6 +1,5 @@
 const config = require('config');
 const jwt = require('jsonwebtoken');
-const cookieParser= require('cookie-parser')
 
 function auth(req, res, next) {
     
@@ -8,17 +7,21 @@ function auth(req, res, next) {
     
     // Check for token
     if(!token){
-        return res.status(401).json({ msg: 'No token, authorization denied'});
+        // console.log("middleware wrong token")
+        req.user ="400" 
+        next()
     }
-    
-    try{
-        // Verify token
-        const decoded = jwt.verify(token, config.get('jwtsecret'));
-        //Add user from payload
-        req.user = decoded;
-    next();
-    } catch(e){
-        res.status(400).json({ msg:'Token is not valid'});
+    else{
+
+        try{
+            // Verify token
+            const decoded = jwt.verify(token, config.get('jwtsecret'));
+            //Add user from payload
+            req.user = decoded;
+        next();
+        } catch(e){
+            res.status(400).json({ msg:'Token is not valid'});
+        }
     }
 }
 

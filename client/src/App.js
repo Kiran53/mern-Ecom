@@ -1,6 +1,6 @@
 import './App.css';
 import Nav from './components/Nav';
-import user from './slices/auth'
+import {user} from './slices/auth'
 import {
   BrowserRouter as Router,
   Routes,
@@ -18,7 +18,7 @@ import { useDispatch } from 'react-redux';
 function App() {
   const dispatch=useDispatch()
   useEffect(()=>{
-    console.log("app.js/dispatch")
+    // console.log("app.js/dispatch")
       dispatch(user())
   },[])
   const Navlayout=()=>{

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { login,register } from "../../slices/auth";
 
 import "../../static/loginStyle.css"
@@ -12,7 +12,7 @@ export default function Login(props) {
             document.getElementById("tab-2").click();
     })
 
-    
+    const isLoggedIn=useSelector(state=>state.auth.isLoggedIn)
     const dispatch=useDispatch();
     // const [successful, setSuccessful] = useState(false);
     const nav = useNavigate();
@@ -108,6 +108,7 @@ export default function Login(props) {
 
 // ALERT    ALERT   ALERT 
     let alert= (message,type)=>{
+        console.log("hhihihi")
         const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
 
         const wrapper = document.createElement('div')
@@ -127,22 +128,23 @@ export default function Login(props) {
 // LOGIN        LOGIN      LOGIN    
     let LoginSubmit = async (e) => {
         e.preventDefault()
+
         const LoginDetails = {
             email: document.getElementById("Lemail").value,
             password: document.getElementById("Lpass").value
         }
-        
-        dispatch(login(LoginDetails))
-        .then(()=>nav('/'))
-        .catch(error => {
+        if(LoginDetails.email.length<1 || LoginDetails.password.length<1) {
+            console.log("fill")
             alert('fill all details', 'danger')
-            console.log(error)
-        })
+            return;
+        }
+        dispatch(login(LoginDetails))
+        
     }
     let handleSubmit = async (e) => {
         e.preventDefault()
         if (errors.name.length || errors.email.length || errors.password.length || errors.rpassword.length) {
-            alert('fill all details', 'danger')
+            alert('Fill all details!', 'danger')
             return;
         }
         const user={
@@ -172,6 +174,9 @@ export default function Login(props) {
             console.log(error);
         })
     }
+    useEffect(() => {
+        if(isLoggedIn===true) nav('/')
+    },[isLoggedIn])
     
     return (
         <div className="login-signup">
@@ -202,6 +207,7 @@ export default function Login(props) {
                                         <div className="group">
                                             <input type="submit" id="login" className="button" onClick={LoginSubmit} value="Sign In" />
                                         </div>
+                                        <div id="liveAlertPlaceholder" className="login-signup"></div>
                                         <div className="hr"></div>
                                         <div className="foot">
                                             <Link to="#">Forgot Password?</Link>
