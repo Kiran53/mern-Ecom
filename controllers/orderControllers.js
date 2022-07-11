@@ -1,6 +1,6 @@
-const Order = require('../models/Order');
-const Cart = require('../models/Cart');
-const User = require('../models/User');
+const Order = require('../models/Order.js');
+const Cart = require('../models/Cart.js');
+const User = require('../models/User.js');
 const config = require('config');
 const stripe = require('stripe')(config.get('StripeAPIKey'));
 

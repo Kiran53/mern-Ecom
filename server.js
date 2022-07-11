@@ -31,7 +31,7 @@ app.use('/api',orderRoutes);
       })
       const dbURI = config.get('dbURI')
       const port = process.env.PORT || 4000;
-      mongoose.connect(dbURI || process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
+      mongoose.connect(dbURI || process.env.MONGOLAB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
       .then(() => app.listen(port, () => console.log(`Server running on http://localhost:${port}` )))
       .catch((err) => console.log(err));
       
