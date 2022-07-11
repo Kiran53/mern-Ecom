@@ -5,6 +5,7 @@ import { login,register } from "../../slices/auth";
 
 import "../../static/loginStyle.css"
 import validator from 'validator'
+import { clearError } from '../../slices/error';
 export default function Login(props) {
 
     useEffect(() => {
@@ -13,12 +14,17 @@ export default function Login(props) {
     })
 
     const isLoggedIn=useSelector(state=>state.auth.isLoggedIn)
+    const error=useSelector(state=>state.error.error)
     const dispatch=useDispatch();
-    // const [successful, setSuccessful] = useState(false);
+    
     const nav = useNavigate();
 
     const [pd, setpd] = useState('');
-
+    
+    useEffect(() => {
+        // console.log(error)
+        alert(error,'danger')
+    },[error])
 
     const [errors, setError] = useState({
         name: '',
@@ -107,14 +113,19 @@ export default function Login(props) {
     }
 
 // ALERT    ALERT   ALERT 
+    
     let alert= (message,type)=>{
-        console.log("hhihihi")
-        const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+        // console.log(message)
+        if(typeof message==='undefined' ||  message.msg.length===0 || message.length===0) return ;
+        
+        // console.log("hhihihi")
+        const id=`liveAlertPlaceholder${message.type}`
+        const alertPlaceholder = document.getElementById(id)
 
         const wrapper = document.createElement('div')
         wrapper.innerHTML = [
             `<div id="alert-su"  class="alert alert-${type} alert-dismissible alert-su}" role="alert">`,
-            ` <div>${message}</div>`,
+            ` <div>${message.msg}</div>`,
             '   <button type="button" id="close-su-alert"  class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
             '</div>'
         ].join('')
@@ -122,9 +133,11 @@ export default function Login(props) {
         alertPlaceholder.append(wrapper)
         setTimeout(() => {
             document.getElementById("close-su-alert").click();
+            if(message.dis) dispatch(clearError())
         }, 1500)
         
     }
+    
 // LOGIN        LOGIN      LOGIN    
     let LoginSubmit = async (e) => {
         e.preventDefault()
@@ -134,17 +147,23 @@ export default function Login(props) {
             password: document.getElementById("Lpass").value
         }
         if(LoginDetails.email.length<1 || LoginDetails.password.length<1) {
-            console.log("fill")
-            alert('fill all details', 'danger')
+            // console.log("fill")
+            alert({msg:'fill all details', type:1}, 'danger')
             return;
         }
+        
         dispatch(login(LoginDetails))
         
     }
+// REGISTER    REGISTER   REGISTER
     let handleSubmit = async (e) => {
         e.preventDefault()
-        if (errors.name.length || errors.email.length || errors.password.length || errors.rpassword.length) {
-            alert('Fill all details!', 'danger')
+        if (errors.name.length || errors.email.length || errors.password.length || errors.rpassword.length) 
+            return;
+        
+        if(formValues.name.length===0 || formValues.password.length===0 || formValues.email.length===0){
+            // console.log('fill')
+            alert({msg:'Fill all details!',type:2}, 'danger')
             return;
         }
         const user={
@@ -153,7 +172,7 @@ export default function Login(props) {
             email: formValues.email
         }   
         dispatch(register(user))
-        .then(()=>nav('/'))
+        
         
         // axios.post('/api/register', {
         //     name: formValues.name,
@@ -171,7 +190,7 @@ export default function Login(props) {
         .catch(function (error) {
             alert(error.response.data.msg, 'danger')
 
-            console.log(error);
+            // console.log(error);
         })
     }
     useEffect(() => {
@@ -207,7 +226,7 @@ export default function Login(props) {
                                         <div className="group">
                                             <input type="submit" id="login" className="button" onClick={LoginSubmit} value="Sign In" />
                                         </div>
-                                        <div id="liveAlertPlaceholder" className="login-signup"></div>
+                                        <div id="liveAlertPlaceholder1" className="login-signup"></div>
                                         <div className="hr"></div>
                                         <div className="foot">
                                             <Link to="#">Forgot Password?</Link>
@@ -240,7 +259,7 @@ export default function Login(props) {
                                         <div className="group">
                                             <input type="submit" className="button" id="signup" value="Sign Up" onClick={handleSubmit} />
                                         </div>
-                                        <div id="liveAlertPlaceholder" className="login-signup"></div>
+                                        <div id="liveAlertPlaceholder2" className="login-signup"></div>
 
                                         <div className="foot">
                                             <label htmlFor="tab-1">Already Member?</label>

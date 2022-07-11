@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
+import { setError } from "./error";
 
 
 export const user = createAsyncThunk(
@@ -9,27 +10,20 @@ export const user = createAsyncThunk(
             // console.log("made req")
             const response = await axios.get('/api/user')
             // console.log(response.data)
-            
             return response.data 
         } 
         catch (error) {
-            // console.log("aut/user: error")
-            const message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
-            return thunkAPI.rejectWithValue(message);
+            
+            return thunkAPI.rejectWithValue(error.response.data.msg);
         }
     }
 )
 export const register = createAsyncThunk(
     "auth/register",
-    async ({ username, email, password }, thunkAPI) => {
+    async ({ name, email, password }, thunkAPI) => {
         try {
             const response = await axios.post('/api/register', {
-                name: username,
+                name: name,
                 email: email,
                 password: password
             },
@@ -40,15 +34,13 @@ export const register = createAsyncThunk(
             // thunkAPI.dispatch(setMessage(response.data.message));
             return response.data;
         } catch (error) {
-            const message =
-                (error.response &&
-                    error.response.data &&
-                    error.response.data.message) ||
-                error.message ||
-                error.toString();
+            
             //   return message;
-            // thunkAPI.dispatch(setMessage(message));
-            return thunkAPI.rejectWithValue(message);
+            const msg=error.response.data
+            msg.type=2
+            msg.dis=true
+            thunkAPI.dispatch(setError(msg));
+            return thunkAPI.rejectWithValue()
         }
     }
 )
@@ -61,11 +53,11 @@ export const login = createAsyncThunk(
             // console.log(data)
             return { user: data };
         } catch (error) {
-            
-            
-            // return message
-            // thunkAPI.dispatch(setMessage(message));
-            return thunkAPI.rejectWithValue(error.response.data);
+            const msg=error.response.data
+            msg.type=1
+            msg.dis=true
+            thunkAPI.dispatch(setError(msg));
+            return thunkAPI.rejectWithValue()
         }
     }
 )
@@ -82,7 +74,7 @@ const authSlice = createSlice({
     extraReducers: {
         [register.fulfilled]: (state, action) => {
             state.isLoggedIn = true;
-            state.user=action.payload.data.name
+            state.user=action.payload.data
         },
         [register.rejected]: (state, action) => {
             state.isLoggedIn = false;
@@ -94,10 +86,9 @@ const authSlice = createSlice({
             state.user = action.payload.data;
         },
         [login.rejected]: (state, action) => {
-            // console.log(action.payload)
-            state.autherr= action.payload
             state.isLoggedIn = false;
             state.user = null;
+
         },
         [logout.fulfilled]: (state, action) => {
             state.isLoggedIn = false;

@@ -1,6 +1,7 @@
 import {configureStore} from '@reduxjs/toolkit'
 import authReducer from './slices/auth'
-const reducer={auth:authReducer}
+import errorReducer from './slices/error'
+const reducer={auth:authReducer, error:errorReducer}
 const store= configureStore({
     reducer: reducer,
     devTools: true,

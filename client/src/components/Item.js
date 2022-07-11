@@ -10,7 +10,7 @@ export default function Item(props) {
   
   const location = useLocation()
   const id = location.state;
-  const [loading, setLoading] = useState(true);
+//   const [loading, setLoading] = useState(true);
   const[mainurl,setMainurl]=useState();
   const [ele, setEle] = useState([])
   useEffect(() => {
@@ -27,7 +27,7 @@ export default function Item(props) {
     }
 
     fetchData();
-  }, []);
+  });
   
   return (
     <div className="item">
