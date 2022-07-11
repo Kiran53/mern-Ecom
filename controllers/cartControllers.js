@@ -1,5 +1,6 @@
-const Cart = require('../models/Cart');
-const Item = require('../models/Item');
+const path = require("path");
+const Cart = require(path.resolve('./models/Cart'));
+const Item = require(path.resolve('./models/Item'));
 
 module.exports.get_cart_items = async (req,res) => {
     const userId = req.params.id;

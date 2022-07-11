@@ -1,8 +1,9 @@
-const User = require('../models/User');
+const path = require("path");
+const User = require(path.resolve('./models/User'));
 const jwt = require('jsonwebtoken');
 const config = require('config');
 const bcrypt = require('bcrypt');
-const { StreamDescription } = require('mongodb');
+
 
 module.exports.signup = (req, res) => {
     const { name, email, password } = req.body;

@@ -32,7 +32,7 @@ app.use('/api',orderRoutes);
       const dbURI = config.get('dbURI')
       const port = process.env.PORT || 4000;
       mongoose.connect(process.env.MONGOLAB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
-      .then(() => app.listen(port, () => console.log(`Server running on http://localhost:${port}` )))
+      .then(() => app.listen(port, () => console.log(`Server running on http://localhost:${port} ${MONGOLAB_URI}` )))
       .catch((err) => console.log(err));
       
       

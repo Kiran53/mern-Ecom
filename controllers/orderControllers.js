@@ -1,6 +1,7 @@
-const Order = require('../models/Order.js');
-const Cart = require('../models/Cart.js');
-const User = require('../models/User.js');
+const path = require("path");
+const Order = require(path.resolve('./models/Order.js'));
+const Cart = require(path.resolve('./models/Cart.js'));
+const User = require(path.resolve('./models/User.js'));
 const config = require('config');
 const stripe = require('stripe')(config.get('StripeAPIKey'));
 

@@ -1,5 +1,6 @@
 const {Router}=require('express')
-const orderC=require('../controllers/orderControllers')
+const path = require("path");
+const orderC=require(path.resolve('./controllers/orderControllers'))
 const router=Router()
 
 router.get('/order/:id',orderC.get_orders)

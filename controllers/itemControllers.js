@@ -1,4 +1,5 @@
-const Item = require('../models/Item');
+const path = require("path");
+const Item = require(path.resolve('./models/Item'));
 
 module.exports.get_items = (req,res) => {
     Item.find().sort({date:-1}).then(items => res.json(items));

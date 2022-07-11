@@ -1,7 +1,8 @@
+const path = require("path");
 const { Router } = require('express');
-const authController = require('../controllers/authControllers');
+const authController = require(path.resolve('./controllers/authControllers'));
 const router = Router();
-const auth = require('../middleware/auth');
+const auth = require(path.resolve('./middleware/auth'));
 
 router.post('/register', authController.signup);
 router.post('/login', authController.login);
