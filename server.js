@@ -29,10 +29,10 @@ app.use('/api',orderRoutes);
     app.get('*', (req, res) => {
           res.sendFile(path.join(__dirname, '/client/build'))
       })
-      const dbURI = config.get('dbURI')
+      const dbURI = 'mongodb+srv://KiranEkom:Oneto34five@cluster0.w8jmi.mongodb.net/?retryWrites=true&w=majority'
       const port = process.env.PORT || 4000;
-      mongoose.connect(process.env.MONGOLAB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
-      .then(() => app.listen(port, () => console.log(`Server running on http://localhost:${port} ${MONGOLAB_URI}` )))
+      mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
+      .then(() => app.listen(port, () => console.log(`Server running on http://localhost:${port} ` )))
       .catch((err) => console.log(err));
       
       
