@@ -158,6 +158,7 @@ module.exports.get_user = (req, res) => {
         
         return res.status(400).json({ msg: 'error error error'})
     } 
+    // console.log(req.user.id)
     User.findById(req.user.id)
         .select('-password')
         .then(user => res.json(user.name));
