@@ -13,7 +13,7 @@ const app = express();
 app.use(express.json())
 app.use(cookieParser())
 
-app.get('/',(req, res)=> console.log("here"))
+
 app.use('/api',authRoutes);
 app.use('/api',itemRoutes);
 app.use('/api',cartRoutes);
@@ -25,15 +25,14 @@ app.use('/api',orderRoutes);
     //       res.sendFile(path.resolve(__dirname,'client','build','index.html'));
     //     });
     // }
-    // app.use(express.static(path.join(__dirname, '/client/build')))
-    // app.get('*', (req, res) => {
-      //     res.sendFile(path.join(__dirname, '/client/build'))
-      // })
-      // const dbURI = config.get('dbURI');
-      const dbURI = `mongodb+srv://KiranEkom:Oneto34five@cluster0.w8jmi.mongodb.net/?retryWrites=true&w=majority`
+    app.use(express.static(path.join(__dirname, '/client/build')))
+    app.get('*', (req, res) => {
+          res.sendFile(path.join(__dirname, '/client/build'))
+      })
+      const dbURI = config.get('dbURI')
       const port = process.env.PORT || 4000;
-      mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
-      .then(() => app.listen(port, () => console.log(`Server running on http://localhost:${port}`+ config.util.getEnv('NODE_ENV') )))
+      mongoose.connect(dbURI || process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
+      .then(() => app.listen(port, () => console.log(`Server running on http://localhost:${port}` )))
       .catch((err) => console.log(err));
       
       
