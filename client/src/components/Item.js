@@ -15,7 +15,7 @@ export default function Item(props) {
   const [ele, setEle] = useState([])
   useEffect(() => {
     const fetchData = async () =>{
-      setLoading(true);
+    //   setLoading(true);
       try {
         const {data: response} = await axios.get('/api/item/'+id);
         setEle(response);
@@ -23,7 +23,7 @@ export default function Item(props) {
       } catch (error) {
         console.error(error.message);
       }
-      setLoading(false);
+    //   setLoading(false);
     }
 
     fetchData();

@@ -8,7 +8,7 @@ module.exports.signup = (req, res) => {
     const { name, email, password } = req.body;
 
     if (!name || !email || !password) {
-        console.log(req.body)
+        // console.log(req.body)
         return res.status(400).json({ msg: 'Please enter all fields' });
     }
 
@@ -33,6 +33,14 @@ module.exports.signup = (req, res) => {
                                 { expiresIn: 24*3600000 })
                                 res.cookie('token', token, {
                                     expires: new Date(Date.now() + 3600000),
+                                    path: '/',
+                                    httpOnly: true,
+                                    secure: true,
+                                    sameSite: 'none'
+                                    }
+                                )
+                                res.cookie('refresh-token', refreshToken, {
+                                    expires: new Date(Date.now() + 24*3600000),
                                     path: '/',
                                     httpOnly: true,
                                     secure: true,
@@ -146,7 +154,7 @@ module.exports.login = async (req, res) => {
 
 module.exports.get_user = (req, res) => {
     if(req.user==="400"){
-        console.log("here")
+        // console.log("here")
         
         return res.status(400).json({ msg: 'error error error'})
     } 

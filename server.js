@@ -2,15 +2,13 @@ const express = require('express');
 const mongoose = require('mongoose');
 // const path = require('path');
 const config = require('config');
-const router = express.Router();
-const user= require('./models/User');
-const bcrypt=require('bcrypt')
+require('dotenv').config()
 const authRoutes = require('./routes/auth');
 const itemRoutes = require('./routes/item');
 const cartRoutes = require('./routes/cart');
 const orderRoutes = require('./routes/order');
 const cookieParser = require('cookie-parser')
-
+const path = require("path");
 const app = express();
 app.use(express.json())
 app.use(cookieParser())
@@ -40,6 +38,14 @@ app.use('/api',orderRoutes);
 
 const dbURI = config.get('dbURI');
 const port = process.env.PORT || 4000;
-mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
+mongoose.connect(process.env.MONGODB_URI || dbURI, { useNewUrlParser: true, useUnifiedTopology: true, useCreateIndex:true })
   .then(() => app.listen(port, () => console.log(`Server running on http://localhost:${port}`)))
   .catch((err) => console.log(err));
+if(process.env.NODE_ENV === 'production'){    
+  app.use(express.static('client/build'))  // set static folder 
+  //returning frontend for any route other than api 
+  app.get('*',(req,res)=>{     
+      res.sendFile (path.resolve(__dirname,'frontend','build',         
+                    'index.html' ));    
+  });
+}
