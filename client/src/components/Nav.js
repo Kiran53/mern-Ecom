@@ -19,7 +19,7 @@ export default function Nav() {
 
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
                 rel="stylesheet" />
-            <link rel="stylesheet" href="../static/style.css" />
+            
             <meta name="viewport" content="initial-scale=1, maximum-scale=1"></meta>
             <nav className="navbar">
                 <i className="material-icons menu-icon">
