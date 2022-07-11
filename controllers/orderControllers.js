@@ -1,20 +1,20 @@
-import { find, create } from '../models/Order';
-import { findOne, findByIdAndDelete } from '../models/Cart';
-import { findOne as _findOne } from '../models/User';
-import { get } from 'config';
-const stripe = require('stripe')(get('StripeAPIKey'));
+const Order = require('../models/Order');
+const Cart = require('../models/Cart');
+const User = require('../models/User');
+const config = require('config');
+const stripe = require('stripe')(config.get('StripeAPIKey'));
 
-export async function get_orders(req,res) {
+module.exports.get_orders = async (req,res) => {
     const userId = req.params.id;
-    find({userId}).sort({date:-1}).then(orders => res.json(orders));
+    Order.find({userId}).sort({date:-1}).then(orders => res.json(orders));
 }
 
-export async function checkout(req,res) {
+module.exports.checkout = async (req,res) => {
     try{
         const userId = req.params.id;
         const {source} = req.body;
-        let cart = await findOne({userId});
-        let user = await _findOne({_id: userId});
+        let cart = await Cart.findOne({userId});
+        let user = await User.findOne({_id: userId});
         const email = user.email;
         if(cart){
             const charge = await stripe.charges.create({
@@ -25,12 +25,12 @@ export async function checkout(req,res) {
             })
             if(!charge) throw Error('Payment failed');
             if(charge){
-                const order = await create({
+                const order = await Order.create({
                     userId,
                     items: cart.items,
                     bill: cart.bill
                 });
-                const data = await findByIdAndDelete({_id:cart.id});
+                const data = await Cart.findByIdAndDelete({_id:cart.id});
                 return res.status(201).send(order);
             }
         }
