@@ -19,7 +19,7 @@ export default function Nav() {
 
             <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
                 rel="stylesheet" />
-            
+
             <meta name="viewport" content="initial-scale=1, maximum-scale=1"></meta>
             <nav className="navbar">
                 <i className="material-icons menu-icon">
@@ -46,43 +46,57 @@ export default function Nav() {
                 </div>
 
                 {user === null ?
-                    <Link to='/login' className="item">
+                    <>
+                        <Link to='/login' className="item">
 
-                        <div className="group">
-                            <i className="material-icons" >
-                                account_circle
-                            </i>
-                            <div className="detail">
-                                Account
-                                <div className="sub">Sign In</div>
+                            <div className="group">
+                                <i className="material-icons" >
+                                    account_circle
+                                </i>
+                                <div className="detail">
+                                    Account
+                                    <div className="sub">Sign In</div>
+                                </div>
                             </div>
-                        </div>
-                    </Link>
+                        </Link>
+                        <Link to="/login" className="item">
+                            <div className="group">
+                                <i className="material-icons">
+                                    shopping_cart
+                                </i>
+                                <div className="detail">
+                                    Cart
+                                    <div className="sub">Rs 0.0</div>
+                                </div>
+                            </div>
+                        </Link>
+                    </>
                     :
-                
 
-                    <div className="group">
-                        <i className="material-icons" >
-                            account_circle
-                        </i>
-                        <button onClick={Handlelogout} className="btn btn-link text-white">
-                            <div className="detail">
-                                Logout
-                            </div>
-                        </button>
-                    </div>
-                }
-                <Link to="/login" className="item">
-                    <div className="group">
-                        <i className="material-icons">
-                            shopping_cart
-                        </i>
-                        <div className="detail">
-                            Cart
-                            <div className="sub">Rs 0.0</div>
+                    <>
+                        <div className="group">
+                            <button onClick={Handlelogout} className="btn btn-link text-white">
+                                <i className="material-icons" >
+                                    account_circle
+                                </i>
+                                <div className="detail">
+                                    Logout
+                                </div>
+                            </button>
                         </div>
-                    </div>
-                </Link>
+                        <Link to="/cart" className="item">
+                            <div className="group">
+                                <i className="material-icons">
+                                    shopping_cart
+                                </i>
+                                <div className="detail">
+                                    Cart
+                                    <div className="sub">Rs 0.0</div>
+                                </div>
+                            </div>
+                        </Link>
+                    </>
+                }
             </nav>
         </div>
     )

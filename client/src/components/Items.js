@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Link } from "react-router-dom"
-
 export class Items extends Component {
     Click = () => {
         console.log("Hi there, user!");
