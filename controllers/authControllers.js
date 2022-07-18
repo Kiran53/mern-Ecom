@@ -1,7 +1,6 @@
 const path = require("path");
 const User = require(path.resolve('./models/User'));
 const jwt = require('jsonwebtoken');
-const config = require('config');
 const bcrypt = require('bcrypt');
 
 
@@ -27,10 +26,10 @@ module.exports.signup = (req, res) => {
                     newUser.save()
                         .then(user => {
                             const token = jwt.sign({ id: user._id },
-                                config.get('jwtsecret'),
+                                process.env.jwtsecret,
                                 { expiresIn: 3600000 })
                             const refreshToken = jwt.sign({ id: user._id },
-                                config.get('jwtsecretR'),
+                                process.env.jwtsecretR,
                                 { expiresIn: 24*3600000 })
                                 res.cookie('token', token, {
                                     expires: new Date(Date.now() + 3600000),
@@ -102,10 +101,10 @@ module.exports.login = async (req, res) => {
                     if (!isMatch) return res.status(400).json({ msg: 'Invalid credentials' });
 
                     const token = jwt.sign({ id: user._id },
-                        config.get('jwtsecret'),
+                        process.env.jwtsecret,
                         { expiresIn: 3600000 })
                     const refreshToken = jwt.sign({ id: user._id },
-                        config.get('jwtsecretR'),
+                        process.env.jwtsecretR,
                         { expiresIn: 3600000*24 })
 
                         res.cookie('token', token, {

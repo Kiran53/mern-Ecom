@@ -4,10 +4,8 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-   
     "heroku-postbuild": "cd client && npm install && npm run build",
     "setart": "node server.js"
-    
   },
   "author": "kiran",
   "license": "ISC",
