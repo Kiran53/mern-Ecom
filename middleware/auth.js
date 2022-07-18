@@ -1,4 +1,3 @@
-const config = require('config');
 const jwt = require('jsonwebtoken');
 
 function auth(req, res, next) {
@@ -7,15 +6,13 @@ function auth(req, res, next) {
     
     // Check for token
     if(!token){
-        // console.log("middleware wrong token")
-        req.user ="400" 
-        next()
+        return res.status(400)
     }
     else{
 
         try{
             // Verify token
-            const decoded = jwt.verify(token, config.get('jwtsecret'));
+            const decoded = jwt.verify(token, process.env.jwtsecret);
             //Add user from payload
             req.user = decoded;
         next();
